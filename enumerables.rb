@@ -11,7 +11,7 @@ class Array
             i+=1
         end
         self
-    end
+    end 
 end
 
 # #  calls my_each twice on the array, printing all the numbers twice.
@@ -34,11 +34,25 @@ end
 # My Select
 # Now extend the Array class to include my_select that takes a block and returns a new array containing only elements that satisfy the block. Use your my_each method!
 
-# Example:
+class Array
+    def my_select(&prc)
+        selected = []
+        i = 0
+        while i < self.length
+            el = self[i]
+            selected << el if prc.call(el)
+             i += 1
+        end
+        selected
+    end
+end
 
-# a = [1, 2, 3]
-# a.my_select { |num| num > 1 } # => [2, 3]
-# a.my_select { |num| num == 4 } # => []
+# Example:
+a = [1, 2, 3]
+p a.my_select { |num| num > 1 } # => [2, 3]
+p a.my_select { |num| num == 4 } # => []
+
+
 # My Reject
 # Write my_reject to take a block and return a new array excluding elements that satisfy the block.
 
