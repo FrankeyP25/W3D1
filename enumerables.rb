@@ -80,50 +80,89 @@ end
 
 class Array
     def my_any?(&prc)
-        self.each do |el|
-            return true if prc.call(el)
-        end
+        self.each { |el| return true if prc.call(el) }
         false
     end
 
     def my_all?(&prc)
-        count = 0
-        self.each do |el|
-            count += 1 if prc.call(el)
-        end
-        count == self.length
+        # count = 0
+        # self.each do |el|
+        #     count += 1 if prc.call(el)
+        # end
+        # count == self.length
+        self.count { |el| prc.call(el) } == self.length
     end
 end
 
 # Example:
-a = [1, 2, 3]
-p a.my_any? { |num| num > 1 } # => true
-p a.my_any? { |num| num == 4 } # => false
-p a.my_all? { |num| num > 1 } # => false
-p a.my_all? { |num| num < 4 } # => true
+# a = [1, 2, 3]
+# p a.my_any? { |num| num > 1 } # => true
+# p a.my_any? { |num| num == 4 } # => false
+# p a.my_all? { |num| num > 1 } # => false
+# p a.my_all? { |num| num < 4 } # => true
 
 
 # Array
 # My Flatten
 # my_flatten should return all elements of the array into a new, one-dimensional array. Hint: use recursion!
-
+class Array
+    def my_flatten
+        # base case
+        return [] if self.empty?
+        
+        # generalized
+        flattened=[]
+        self.each do |ele|
+            # if they are NOT an array - what can we do
+            if !ele.is_a?(Array)
+                flattened << ele 
+            # if they are an array - what can we do
+            else
+                flattened += ele.my_flatten       # here ele is an array
+            end
+        end
+        flattened
+        # self.each do |row|
+        # my_flatten(row)
+    end
+end
 # Example:
+# p [1, 2, 3, [4, [5, 6]], [[[7]], 8]].my_flatten # => [1, 2, 3, 4, 5, 6, 7, 8]
+#   [ 1, 2, 3,
+#   [ 4, [5, 6]],
+#   [[[ 7 ]], 8 ]]
 
-# [1, 2, 3, [4, [5, 6]], [[[7]], 8]].my_flatten # => [1, 2, 3, 4, 5, 6, 7, 8]
+
+
 # My Zip
 # Write my_zip to take any number of arguments. It should return a new array containing self.length elements. Each element of the new array should be an array with a length of the input arguments + 1 and contain the merged elements at that index. If the size of any argument is less than self, nil is returned for that location.
-
+class Array
+    def my_zip(*arrs)
+        arr=[]
+        (0...self.length).each do |i|
+            empty_arr=[]
+            empty_arr << self[i]
+            arrs.each do |sub_arr|
+                empty_arr << sub_arr[i]
+            end
+            arr << empty_arr
+        end
+        arr
+    end
+end
 # Example:
-
 # a = [ 4, 5, 6 ]
 # b = [ 7, 8, 9 ]
-# [1, 2, 3].my_zip(a, b) # => [[1, 4, 7], [2, 5, 8], [3, 6, 9]]
-# a.my_zip([1,2], [8])   # => [[4, 1, 8], [5, 2, nil], [6, nil, nil]]
-# [1, 2].my_zip(a, b)    # => [[1, 4, 7], [2, 5, 8]]
+# p [1, 2, 3].my_zip(a, b) # => [[1, 4, 7], [2, 5, 8], [3, 6, 9]]
+# p a.my_zip([1,2], [8])   # => [[4, 1, 8], [5, 2, nil], [6, nil, nil]]
+# p [1, 2].my_zip(a, b)    # => [[1, 4, 7], [2, 5, 8]]
 
 # c = [10, 11, 12]
 # d = [13, 14, 15]
-# [1, 2].my_zip(a, b, c, d)    # => [[1, 4, 7, 10, 13], [2, 5, 8, 11, 14]]
+# p [1, 2].my_zip(a, b, c, d)    # => [[1, 4, 7, 10, 13], [2, 5, 8, 11, 14]]
+
+
+
 # My Rotate
 # Write a method my_rotate that returns a new array containing all the elements of the original array in a rotated order. By default, the array should rotate by one element. If a negative value is given, the array is rotated in the opposite direction.
 
