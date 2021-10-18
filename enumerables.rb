@@ -69,21 +69,40 @@ class Array
     end
 end
 # Example:
-a = [1, 2, 3]
-p a.my_reject { |num| num > 1 } # => [1]
-p a.my_reject { |num| num == 4 } # => [1, 2, 3]
+# a = [1, 2, 3]
+# p a.my_reject { |num| num > 1 } # => [1]
+# p a.my_reject { |num| num == 4 } # => [1, 2, 3]
 
 
 
 # My Any
 # Write my_any? to return true if any elements of the array satisfy the block and my_all? to return true only if all elements satisfy the block.
 
+class Array
+    def my_any?(&prc)
+        self.each do |el|
+            return true if prc.call(el)
+        end
+        false
+    end
+
+    def my_all?(&prc)
+        count = 0
+        self.each do |el|
+            count += 1 if prc.call(el)
+        end
+        count == self.length
+    end
+end
+
 # Example:
-# a = [1, 2, 3]
-# a.my_any? { |num| num > 1 } # => true
-# a.my_any? { |num| num == 4 } # => false
-# a.my_all? { |num| num > 1 } # => false
-# a.my_all? { |num| num < 4 } # => true
+a = [1, 2, 3]
+p a.my_any? { |num| num > 1 } # => true
+p a.my_any? { |num| num == 4 } # => false
+p a.my_all? { |num| num > 1 } # => false
+p a.my_all? { |num| num < 4 } # => true
+
+
 # Array
 # My Flatten
 # my_flatten should return all elements of the array into a new, one-dimensional array. Hint: use recursion!
