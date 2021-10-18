@@ -47,25 +47,38 @@ class Array
     end
 end
 
-# Example:
-a = [1, 2, 3]
-p a.my_select { |num| num > 1 } # => [2, 3]
-p a.my_select { |num| num == 4 } # => []
+# # Example:
+# a = [1, 2, 3]
+# p a.my_select { |num| num > 1 } # => [2, 3]
+# p a.my_select { |num| num == 4 } # => []
+
 
 
 # My Reject
 # Write my_reject to take a block and return a new array excluding elements that satisfy the block.
-
+class Array
+    def my_reject(&prc)
+        rejected=[]
+        i=0
+        while i < self.length
+            ele = self[i]
+            rejected << ele if !prc.call(ele)
+            i += 1
+        end
+        rejected
+    end
+end
 # Example:
+a = [1, 2, 3]
+p a.my_reject { |num| num > 1 } # => [1]
+p a.my_reject { |num| num == 4 } # => [1, 2, 3]
 
-# a = [1, 2, 3]
-# a.my_reject { |num| num > 1 } # => [1]
-# a.my_reject { |num| num == 4 } # => [1, 2, 3]
+
+
 # My Any
 # Write my_any? to return true if any elements of the array satisfy the block and my_all? to return true only if all elements satisfy the block.
 
 # Example:
-
 # a = [1, 2, 3]
 # a.my_any? { |num| num > 1 } # => true
 # a.my_any? { |num| num == 4 } # => false
