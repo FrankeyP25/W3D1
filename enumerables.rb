@@ -166,21 +166,65 @@ end
 # My Rotate
 # Write a method my_rotate that returns a new array containing all the elements of the original array in a rotated order. By default, the array should rotate by one element. If a negative value is given, the array is rotated in the opposite direction.
 
+
+class Array
+    def my_rotate(n=1)
+        arr1 = self.dup
+        if n > 0
+            n.times do
+                el = arr1.shift
+                arr1.push(el)
+            end
+        else
+            n = -n
+            n.times do
+                el = arr1.pop
+                arr1.unshift(el)
+            end
+        end
+        arr1
+    end
+end
 # Example:
 
 # a = [ "a", "b", "c", "d" ]
-# a.my_rotate         #=> ["b", "c", "d", "a"]
-# a.my_rotate(2)      #=> ["c", "d", "a", "b"]
-# a.my_rotate(-3)     #=> ["b", "c", "d", "a"]
-# a.my_rotate(15)     #=> ["d", "a", "b", "c"]
+# p a.my_rotate         #=> ["b", "c", "d", "a"]
+# p a.my_rotate(2)      #=> ["c", "d", "a", "b"]
+# p a.my_rotate(-3)     #=> ["b", "c", "d", "a"]
+# p a.my_rotate(15)     #=> ["d", "a", "b", "c"]
+
+
+
 # My Join
 # my_join returns a single string containing all the elements of the array, separated by the given string separator. If no separator is given, an empty string is used.
 
+
+
+class Array
+    def my_join(el="")
+        new_str = ""
+        self.each_with_index do |char, i|
+            if i == self.length - 1 
+                new_str += char
+            else
+                new_str += char + el
+            end
+        end
+        new_str
+        # self.map.with_index { |char, i| i == self.length - 1 ? char : char + el }.join("")
+    end
+end
+
+
 # Example:
 
-# a = [ "a", "b", "c", "d" ]
-# a.my_join         # => "abcd"
-# a.my_join("$")    # => "a$b$c$d"
+a = [ "a", "b", "c", "d" ]
+p a.my_join         # => "abcd"
+p a.my_join("$")    # => "a$b$c$d"
+
+
+
+
 # My Reverse
 # Write a method that returns a new array containing all the elements of the original array in reverse order.
 
